@@ -1,0 +1,153 @@
+Solves a tridiagonal linear system with KSP.
+
+--------------------------------------------------------------------------
+Petsc Release Version 3.0.0, Patch 2, Wed Jan 14 22:57:05 CST 2009
+       The PETSc Team
+    petsc-maint@mcs.anl.gov
+ http://www.mcs.anl.gov/petsc/
+See docs/copyright.html for copyright information
+See docs/changes/index.html for recent updates.
+See docs/troubleshooting.html for problems.
+See docs/manualpages/index.html for help. 
+Libraries linked from /usr/local/tools/petsc-3.0.0/lib
+--------------------------------------------------------------------------
+Options for all PETSc programs:
+ -help: prints help method for each option -on_error_abort: cause an abort when an error is detected. Useful 
+       only when run in the debugger
+ -on_error_attach_debugger [gdb,dbx,xxgdb,ups,noxterm]
+       start the debugger in new xterm
+       unless noxterm is given
+ -start_in_debugger [gdb,dbx,xxgdb,ups,noxterm]
+       start all processes in the debugger
+ -on_error_emacs <machinename>
+    emacs jumps to error file
+ -debugger_nodes [n1,n2,..] Nodes to start in debugger
+ -debugger_pause [m] : delay (in seconds) to attach debugger
+ -stop_for_debugger : prints message on how to attach debugger manually
+                      waits the delay for you to attach
+ -display display: Location where graphics and debuggers are displayed
+ -no_signal_handler: do not trap error signals
+ -mpi_return_on_error: MPI returns error code, rather than abort on internal error
+ -fp_trap: stop on floating point exceptions
+           note on IBM RS6000 this slows run greatly
+ -malloc_dump <optional filename>: dump list of unfreed memory at conclusion
+ -malloc: use our error checking malloc
+ -malloc no: don't use error checking malloc
+ -malloc_info: prints total memory usage
+ -malloc_log: keeps log of all memory allocations
+ -malloc_debug: enables extended checking for memory corruption
+ -options_table: dump list of options inputted
+ -options_left: dump list of unused options
+ -options_left no: don't dump list of unused options
+ -tmp tmpdir: alternative /tmp directory
+ -shared_tmp: tmp directory is shared by all processors
+ -not_shared_tmp: each processor has separate tmp directory
+ -memory_info: print memory usage at end of run
+ -get_total_flops: total flops over all processors
+ -log[_all _summary]: logging objects and events
+ -log_trace [filename]: prints trace of all PETSc calls
+ -info <optional filename>: print informative messages about the calculations
+ -v: prints PETSc version number and release date
+ -options_file <file>: reads options from file
+ -petsc_sleep n: sleeps n seconds before running program
+-----------------------------------------------
+------Additional PETSc component options--------
+ -log_summary_exclude: <vec,mat,pc.ksp,snes>
+ -info_exclude: <null,vec,mat,pc,ksp,snes,ts>
+-----------------------------------------------
+Options database options -------------------------------------------------
+  -options_monitor <stdout>: Monitor options database (PetscOptionsMonitorSet)
+  -options_monitor_cancel: Cancel all options database monitors (PetscOptionsMonitorCancel)
+Vector options -------------------------------------------------
+  -vec_type Vector type:(one of) seq mpi shared feti (VecSetType)
+Vector Options -------------------------------------------------
+  -vec_view: Print vector to stdout (VecView)
+  -vec_view_matlab: Print vector to stdout in a format Matlab can read (VecView)
+  -vec_view_socket: Send vector to socket (can be read from matlab) (VecView)
+  -vec_view_binary: Save vector to file in binary format (VecView)
+Matrix options -------------------------------------------------
+  -mat_type Matrix type:(one of) mffd mpimaij seqmaij maij is shell composite aij
+      mpiaij seqaij csrperm mpicsrperm seqcsrperm crl seqcrl mpicrl baij mpibaij seqbaij sbaij mpisbaij seqsbaij dense mpidense seqdense mpiadj scatter blockmat (MatSetType)
+Options for SEQAIJ matrix -------------------------------------------------
+  -mat_no_unroll: <FALSE> Do not optimize for inodes (slower) ((null))
+  -mat_no_inode: <FALSE> Do not optimize for inodes (slower) ((null))
+  -mat_inode_limit <5>: Do not use inodes larger then this value ((null))
+Matrix Options -------------------------------------------------
+  -mat_view_info: Information on matrix size (MatView)
+  -mat_view_info_detailed: Nonzeros in the matrix (MatView)
+  -mat_view: Print matrix to stdout (MatView)
+  -mat_view_matlab: Print matrix to stdout in a format Matlab can read (MatView)
+  -mat_view_socket: Send matrix to socket (can be read from matlab) (MatView)
+  -mat_view_binary: Save matrix to file in binary format (MatView)
+  -mat_view_draw: Draw the matrix nonzero structure (MatView)
+Preconditioner (PC) Options -------------------------------------------------
+  -pc_type Preconditioner:(one of) none jacobi pbjacobi bjacobi sor lu shell mg
+      eisenstat ilu icc cholesky asm ksp composite redundant nn mat fieldsplit galerkin exotic openmp asa cp bfbt tfs (PCSetType)
+  Jacobi options
+  -pc_jacobi_rowmax: <FALSE> Use row maximums for diagonal (PCJacobiSetUseRowMax)
+  -pc_jacobi_rowsum: <FALSE> Use row sums for diagonal (PCJacobiSetUseRowSum)
+  -pc_jacobi_abs: <FALSE> Use absolute values of diagaonal entries (PCJacobiSetUseAbs)
+Krylov Method (KSP) Options -------------------------------------------------
+  -ksp_type Krylov method:(one of) cg cgne nash stcg gltr richardson chebychev gmres
+      tcqmr bcgs ibcgs bcgsl cgs tfqmr cr lsqr preonly qcg bicg fgmres minres symmlq lgmres lcd (KSPSetType)
+  -ksp_max_it <10000>: Maximum number of iterations (KSPSetTolerances)
+  -ksp_rtol <1e-07>: Relative decrease in residual norm (KSPSetTolerances)
+  -ksp_atol <1e-50>: Absolute value of residual norm (KSPSetTolerances)
+  -ksp_divtol <10000>: Residual norm increase cause divergence (KSPSetTolerances)
+  -ksp_converged_use_initial_residual_norm: Use initial residual residual norm for computing relative convergence (KSPDefaultConvergedSetUIRNorm)
+  -ksp_converged_use_min_initial_residual_norm: Use minimum of initial residual norm and b for computing relative convergence (KSPDefaultConvergedSetUMIRNorm)
+  -ksp_knoll: <FALSE> Use preconditioner applied to b for initial guess (KSPSetInitialGuessKnoll)
+  -ksp_fischer_guess <0>: Use Paul Fischer's algorihtm for initial guess (KSPSetUseFischerGuess)
+  -ksp_convergence_test <default> (choose one of) default skip
+  -ksp_norm_type <preconditioned> (choose one of) NO PRECONDITIONED UNPRECONDITIONED NATURAL
+  -ksp_check_norm_iteration <-1>: First iteration to compute residual norm (KSPSetCheckNormIteration)
+  -ksp_lag_norm: Lag the calculation of the residual norm (KSPSetLagNorm)
+  -ksp_diagonal_scale: Diagonal scale matrix before building preconditioner (KSPSetDiagonalScale)
+  -ksp_diagonal_scale_fix: Fix diagonaled scaled matrix after solve (KSPSetDiagonalScaleFix)
+  -ksp_constant_null_space: Add constant null space to Krylov solver (KSPSetNullSpace)
+  -ksp_converged_reason: Print reason for converged or diverged (KSPSolve)
+  -ksp_monitor_cancel: Remove any hardwired monitor routines (KSPMonitorCancel)
+  -ksp_monitor <stdout>: Monitor preconditioned residual norm (KSPMonitorSet)
+  -ksp_monitor_range <stdout>: Monitor percent of residual entries more than 10 percent of max (KSPMonitorRange)
+  -ksp_monitor_solution: Monitor solution graphically (KSPMonitorSet)
+  -ksp_monitor_true_residual <stdout>: Monitor true residual norm (KSPMonitorSet)
+  -ksp_monitor_singular_value <stdout>: Monitor singular values (KSPMonitorSet)
+  -ksp_monitor_short <stdout>: Monitor preconditioned residual norm with fewer digits (KSPMonitorSet)
+  -ksp_monitor_draw: Monitor graphically preconditioned residual norm (KSPMonitorSet)
+  -ksp_monitor_draw_true_residual: Monitor graphically true residual norm (KSPMonitorSet)
+  -ksp_monitor_range_draw: Monitor graphically preconditioned residual norm (KSPMonitorSet)
+  Pick at most one of -------------
+    -ksp_left_pc: Use left preconditioning (KSPSetPreconditionerSide)
+    -ksp_right_pc: Use right preconditioning (KSPSetPreconditionerSide)
+    -ksp_symmetric_pc: Use symmetric (factorized) preconditioning (KSPSetPreconditionerSide)
+  -ksp_compute_singularvalues: Compute singular values of preconditioned operator (KSPSetComputeSingularValues)
+  -ksp_compute_eigenvalues: Compute eigenvalues of preconditioned operator (KSPSetComputeSingularValues)
+  -ksp_plot_eigenvalues: Scatter plot extreme eigenvalues (KSPSetComputeSingularValues)
+  KSP GMRES Options
+  -ksp_gmres_restart <30>: Number of Krylov search directions (KSPGMRESSetRestart)
+  -ksp_gmres_haptol <1e-30>: Tolerance for exact convergence (happy ending) (KSPGMRESSetHapTol)
+  -ksp_gmres_preallocate: Preallocate Krylov vectors (KSPGMRESSetPreAllocateVectors)
+  Pick at most one of -------------
+    -ksp_gmres_classicalgramschmidt: Classical (unmodified) Gram-Schmidt (fast) (KSPGMRESSetOrthogonalization)
+    -ksp_gmres_modifiedgramschmidt: Modified Gram-Schmidt (slow,more stable) (KSPGMRESSetOrthogonalization)
+  -ksp_gmres_cgs_refinement_type <REFINE_NEVER> (choose one of) REFINE_NEVER REFINE_IFNEEDED REFINE_ALWAYS
+  -ksp_gmres_krylov_monitor: Plot the Krylov directions (KSPMonitorSet)
+  -ksp_view: View linear solver parameters (KSPView)
+KSP Object:
+  type: gmres
+    GMRES: restart=30, using Classical (unmodified) Gram-Schmidt Orthogonalization with no iterative refinement
+    GMRES: happy breakdown tolerance 1e-30
+  maximum iterations=10000, initial guess is zero
+  tolerances:  relative=1e-07, absolute=1e-50, divergence=10000
+  left preconditioning
+PC Object:
+  type: jacobi
+  linear system matrix = precond matrix:
+  Matrix Object:
+    type=seqaij, rows=840, cols=840
+    total: nonzeros=2520, allocated nonzeros=4200
+      not using I-node routines
+Norm of error 8.86019e-05, Iterations 2877
+  There are 840 unknowns for this problem.  
+  The relative error I compute with my data objects is 4.278e-06
+  The absolute error I compute with my data objects is 2.723e-06
