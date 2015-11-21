@@ -1,4 +1,31 @@
 function L = ConstructL( q, t )
+%CONSTRUCTL.   Construct the right hand side for q_t = L( q ).
+%
+% The routine L = CONSTRUCTL( q, t ) constructs the RHS function for a finite volume method.  It is
+% assumed that the right hand side is of the conservative flux difference form
+%
+%       q_t = L( q ) = -1/dx ( f( q_{i+1/2} ) - f( q_{i-1/2} ) )
+%
+% for the PDE q_t + f(q)_x = 0.
+%
+% The shape of L is the same as of q, so that an ODE solver can be applied to
+% the result.
+%
+% Required routines (that this function should know exist:
+%
+%       set_boundary - sets the boundary conditions on the solution
+%       fluxfunc     - the flux function
+%
+% Input
+% -----
+%
+%       q    - current solution (total of mx elements)
+%       t    - current time ( scalar )
+%
+% Returns
+% -------
+%
+%       L  - Right hand side function q_t = L( q ).
 
     global params
     mx     = params.mx;
