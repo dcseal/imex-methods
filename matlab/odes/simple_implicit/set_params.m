@@ -23,8 +23,8 @@
 
     global params
 
-    params.num_corrections = 1;
-    params.sdc_order = 6;
+    params.num_corrections = 3;
+    params.sdc_order = 4;
 
     params.coeffs = ['coeffs_', coeff_type];
 

@@ -1,4 +1,4 @@
-%%%% Classical RK4 Butcher Tableau %%%%
+%%%% Classical RK2 Butcher Tableau %%%%
 
 s = 2;
 

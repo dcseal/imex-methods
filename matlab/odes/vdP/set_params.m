@@ -4,7 +4,7 @@
                    % yes
 
     nrefine = 1;   % number of times to refind the grid
-    mstart  = 100;   % starting resolution for the grid refinement
+    mstart  = 100; % starting resolution for the grid refinement
 
     tstart  = 0;
     tfinal  = 0.50;
