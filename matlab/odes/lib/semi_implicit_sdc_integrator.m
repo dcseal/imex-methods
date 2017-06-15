@@ -68,7 +68,7 @@ function ynp1 = semi_implicit_sdc_integrator( tn, dt, yn )
         for j=2:s
 
             % evaluate a new RHS part of the solution:
-            tmp = k(j-1,:);
+            tmp = kE(j-1,:);
 
             kI(j-1, :) = fI  ( tpts(j-1), Q(j-1,:) )';
             kE(j-1, :) = fE  ( tpts(j-1), Q(j-1,:) )';
