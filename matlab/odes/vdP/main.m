@@ -60,7 +60,8 @@
 
             qn = q(n,:);
             % qn = rk_integrator( tvec(n), dt, qn );
-            qn = ark_sdc_integrator( tvec(n), dt, qn );
+            % qn = ark_sdc_integrator( tvec(n), dt, qn );
+            qn = semi_implicit_sdc_integrator( tvec(n), dt, qn );
             q( n+1, :)  = qn;
             nsteps = nsteps+1;
 
