@@ -3,8 +3,8 @@
     plt     = 1;   % whether or not to turn on the plotter.  set to non-zero if
                    % yes
 
-    nrefine = 10;   % number of times to refind the grid
-    mstart  = 2;   % starting resolution for the grid refinement
+    nrefine = 2;   % number of times to refind the grid
+    mstart  = 20;  % starting resolution for the grid refinement
 
     tstart  = 0;
     tfinal  = 2.0;
@@ -21,6 +21,7 @@
 
     params.sdc_order = 6;
     params.coeffs = 'coeffs_ark32';
+%   params.coeffs = 'coeffs_ark43';
     params.num_corrections = 3;
 
     % problem specific parameters
@@ -28,6 +29,7 @@
 
     params.meqn   = 1;
     params.tau    = 1.0e-4;
+    params.tau    = 1.0e-2;
 
     % might as well print the parameters used
     params

@@ -3,6 +3,7 @@
     addpath('../lib/');
 
     set_params;
+    params.A = -1/params.tau;
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Outer loop.  Each time this halves the grid size if nrefine > 1 %
@@ -34,7 +35,8 @@
         if( sdc )
             for n=1:mt
 %               q(n+1)  = ark_sdc_integrator( tvec(n), dt, q(n) );
-                q(n+1)  = semi_implicit_sdc_integrator( tvec(n), dt, q(n) );
+%               q(n+1)  = semi_implicit_sdc_integrator( tvec(n), dt, q(n) );
+                q(n+1)  = backward_taylor_imex( tvec(n), dt, q(n) );
                 nsteps = nsteps+1;
             end
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

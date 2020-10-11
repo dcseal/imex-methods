@@ -1,8 +1,5 @@
-This is a bunch of Matlab code that does stuff.
-
-This is a crappy README file.
-
-
+This is a README file. This is a bunch of Matlab code that implements some
+implicit-explicit solvers.
 
 The driver for this whole shtuff is located in
 
@@ -11,8 +8,6 @@ The driver for this whole shtuff is located in
 User parameters and problem specific parameters are set here.  In order to
 accomodate these paraemters, there's a global struct called params that gets
 passed pretty much everywhere.
-
-
 
 RK coefficients can be added by copying and modifying files coeffs* and
 commenting the proper line in rk_integrator.m
@@ -27,9 +22,6 @@ User defined functions include:
     ConstructL.m     % This function depends on the function:
     fluxfunc.m       % function defining the problem
 
-
-
-
 One of the most important parts of these IMEX routines is the matrix inversion
 part.  If you create a new application, you need to modify the file
 
@@ -42,7 +34,6 @@ form:
 
 Where the unknown variable is y.  The y_i come from the off diagonal part of
 the butcher tableau, and fI is the implicit part of the system.
-
 
 Whatever routine you use, it should should be able to handle any system of
 ODES, provided the user specifies size and length of the array to be operated

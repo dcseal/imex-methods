@@ -1,4 +1,7 @@
-%%%%%%%%%% Kaps main %%%%%%%%%%%%%
+% ODE: y' = -1/tau ( y - cos(t) )
+%
+% In the limit as tau -> 0, the solution becomes y(t) = cos(t), otherwise the
+% solution includes exponentials of the form exp(-y/tau)
 
     clear all
 
@@ -44,8 +47,9 @@
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         qex = 1/(1+params.tau^2)*( cos(tvec) + params.tau * sin(tvec) ...
                 - exp( -tvec / params.tau ) )';
+        qex(1) = 1;
         q  = zeros( size(qex) );
-        q0 = 0;
+        q(1) = 1;
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -55,7 +59,9 @@
         nsteps = 0;
         if( sdc )
             for n=1:mt
-                q(n+1,:)  = ark_sdc_integrator( tvec(n), dt, q(n,:) );
+                q(n+1,:)  = bt_imex( tvec(n), dt, q(n,:) );
+                %q(n+1,:)  = ark_sdc_integrator( tvec(n), dt, q(n,:) );
+                %q(n+1,:)  = rk_integrator( tvec(n), dt, q(n,:) );
                 %q(n+1,:)  = sdc_integrator( tvec(n), dt, q(n,:) );
                 nsteps = nsteps+1;
             end
